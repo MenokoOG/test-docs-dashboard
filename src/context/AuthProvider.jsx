@@ -5,7 +5,7 @@ import {
     createUserWithEmailAndPassword,
     signOut
 } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../utils/firebase';
 
 const AuthContext = createContext();
@@ -21,7 +21,8 @@ export const AuthProvider = ({ children }) => {
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
-                    setCurrentUser({ ...user, ...docSnap.data() });
+                    const userData = docSnap.data();
+                    setCurrentUser({ ...user, moniker: userData.moniker });
                 } else {
                     setCurrentUser(user);
                 }
@@ -31,7 +32,7 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
         });
 
-        return unsubscribe;
+        return () => unsubscribe();
     }, []);
 
     const login = (email, password) =>
