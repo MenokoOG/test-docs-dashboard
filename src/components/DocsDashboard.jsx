@@ -123,7 +123,7 @@ const DocsDashboard = () => {
                     docs.map((doc) => (
                         <div
                             key={doc.id}
-                            className="p-4 bg-secondary text-black rounded mt-4 shadow"
+                            className="p-4 bg-cyan-400 text-black rounded mt-4 shadow"
                         >
                             <h4 className="text-lg font-semibold">{doc.title}</h4>
                             <p>{doc.description}</p>
